@@ -12,13 +12,14 @@
     <navbar></navbar>
     <main>
         <button id="addBook">Add a Book</button>
+        <div id="bookDisplay"></div>
         <dialog>
             <label for="title">Title:</label>
-            <input type="text" id="title" autofocus>
+            <input type="text" id="title" required autofocus>
             <label for="author">Author:</label>
-            <input type="text" id="author">
+            <input type="text" id="author" required>
             <label for="pages">Pages:</label>
-            <input type="text" id="pages">
+            <input type="number" id="pages" required>
             <label for="haveRead">Have read:</label>
             <input type="checkbox" id="haveRead">
             <button id="cancel">Cancel</button>
