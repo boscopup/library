@@ -1,36 +1,105 @@
 :root {
     --book-width: 250px;
+    --book-height: 200px;
     --book-padding: 10px;
     --book-border: 3px;
     --book-display-grid-gap: 10px;
     --book-display-grid-padding: 10px;
     --book-container-width: calc(var(--book-width) + 2 * var(--book-padding) + 2 * var(--book-border));
     --book-display-max-width: calc(4 * var(--book-container-width) + 3 * var(--book-display-grid-gap));
+    --header-color: #EF5A6F;
+    --main-color: #FFF1DB;
+    --book-color: #D4BDAC;
+    --footer-color: #536493;
 }
 
+header {
+    background-color: var(--header-color);
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+    align-items: center;
+    box-shadow: 0px 3px 3px 3px rgb(66, 66, 66);
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+header > div {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+header > img {
+    height: 100px;
+}
+
+/* Button */
 #addBook {
-    background-color: blue;
-    border-radius: 8px;
-    color: white;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: var(--footer-color);
+    border-radius: 40em;
+    border-style: none;
+    box-shadow: #424c69 0 -12px 6px inset;
+    color: var(--main-color);
+    padding: 5px 20px;
+    justify-self: flex-start;
+}
+
+body {
+    background-color: var(--main-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    background-color: var(--main-color);
+    padding-top: 25px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
 }
 
 #bookDisplay {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--book-container-width), 1fr));
-    grid-gap: var(--book-display-grid-gap);;
+    grid-template-columns: repeat(auto-fill, 276px);
+    width: 100vw;                               /* Needed to make the responsive wrapping work */
+    gap: var(--book-display-grid-gap);;
     padding: var(--book-display-grid-padding);
     max-width: var(--book-display-max-width);
-
+    justify-content: center;
+    align-items: center;
+    justify-self: stretch;
 }
-
-@media (max-width: 992px) {
-    #bookDisplay {  grid-template-columns: auto;}
-}
-
 
 .book {
+    background-color: var(--book-color);
     border: solid black var(--book-border);
     border-radius: 8px;
     padding: var(--book-padding);
     width: var(--book-width);
+    height: var(--book-height);
+    box-shadow: 2px 2px 2px 2px rgb(66, 66, 66);
+}
+
+footer {
+    text-align: center;
+    font-size: small;
+    background-color: var(--footer-color);
+    height: 50px;
+    margin-top: auto;
+    box-shadow: 0px -3px 3px 3px rgb(66, 66, 66);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--main-color);
 }
