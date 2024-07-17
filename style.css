@@ -1,0 +1,36 @@
+:root {
+    --book-width: 250px;
+    --book-padding: 10px;
+    --book-border: 3px;
+    --book-display-grid-gap: 10px;
+    --book-display-grid-padding: 10px;
+    --book-container-width: calc(var(--book-width) + 2 * var(--book-padding) + 2 * var(--book-border));
+    --book-display-max-width: calc(4 * var(--book-container-width) + 3 * var(--book-display-grid-gap));
+}
+
+#addBook {
+    background-color: blue;
+    border-radius: 8px;
+    color: white;
+}
+
+#bookDisplay {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--book-container-width), 1fr));
+    grid-gap: var(--book-display-grid-gap);;
+    padding: var(--book-display-grid-padding);
+    max-width: var(--book-display-max-width);
+
+}
+
+@media (max-width: 992px) {
+    #bookDisplay {  grid-template-columns: auto;}
+}
+
+
+.book {
+    border: solid black var(--book-border);
+    border-radius: 8px;
+    padding: var(--book-padding);
+    width: var(--book-width);
+}
