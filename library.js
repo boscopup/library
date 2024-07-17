@@ -1,5 +1,24 @@
 const myLibrary = [];
 
+/**
+ *  populateLibrary: For development purposes to have a canned set of books
+ *  already in the library. When database functionality gets added, this
+ *  function can pull from the database to initialize the page.
+ */
+function populateLibrary() {
+    let book;
+    book = new Book("The Hobbit", "J.R.R. Tolkien", 300, true);
+    myLibrary.push(book);
+    book = new Book("Just Mercy", "Bryan Stevenson", 456, true);
+    myLibrary.push(book);
+    book = new Book("Pride and Prejudice", "Jane Austen", 345, false);
+    myLibrary.push(book);
+    book = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 159, true);
+    myLibrary.push(book);
+    book = new Book("Miss Peregrine's Home for Peculiar Children", "Ransom Riggs and Jesse Bernstein", 352, false);
+    myLibrary.push(book);
+}
+
 function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
@@ -65,6 +84,7 @@ function clearDialog() {
     document.querySelector('#haveRead').checked = false;    
 }
 
+
 const dialog = document.querySelector("dialog");
 const saveButton = document.querySelector("dialog button#save");
 const cancelButton = document.querySelector("dialog button#cancel");
@@ -87,3 +107,6 @@ saveButton.addEventListener("click", () => {
 addBookButton.addEventListener("click", () => {
     dialog.showModal();
 });
+
+populateLibrary();
+refreshBookDisplay();
