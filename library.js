@@ -46,13 +46,26 @@ function addBookToLibrary() {
     myLibrary.push(book);
 }
 
+/**
+ * 
+ * @param {string} bookID contains a string of the form "book-#", where # is an integer
+ * 
+ * This function searches the library for the book and removes it from the array.
+ */
+function deleteBookFromLibrary(id) {
+    console.log(`Removing book ID#${id}`);
+    myLibrary.splice(id, 1);
+}
+
 function refreshBookDisplay() {
-    let bookDiv, p;
+    let bookDiv, p, img;
     let display = document.querySelector("#bookDisplay");
     display.replaceChildren();  // Empty what's there
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, index) => {
+        bookID = "book-" + index;
         bookDiv = document.createElement("div")
         bookDiv.classList.add("book");
+        bookDiv.id = bookID;
         p = document.createElement("p");
         p.classList.add("bookTitle");
         p.textContent = book.title;
@@ -73,6 +86,16 @@ function refreshBookDisplay() {
             p.textContent = "Have not read";
         }
         bookDiv.appendChild(p);
+        img = document.createElement("img");
+        img.src = "images/trash-can-outline.png";
+        img.alt = "Delete book";
+        img.title = "Delete book";
+        img.id = "delete-" + index;
+        img.addEventListener("click", () => {
+            deleteBookFromLibrary(index);
+            refreshBookDisplay();
+        })
+        bookDiv.appendChild(img);
         display.appendChild(bookDiv);
     });
 }

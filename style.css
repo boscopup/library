@@ -91,6 +91,11 @@ main {
     box-shadow: 2px 2px 2px 2px rgb(66, 66, 66);
 }
 
+.book > img {
+    width: 20px;
+    height: 20px;
+}
+
 footer {
     text-align: center;
     font-size: small;
