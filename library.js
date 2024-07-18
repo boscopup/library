@@ -93,6 +93,7 @@ const addBookButton = document.querySelector("#addBook");
 
 cancelButton.addEventListener("click", () => {
     dialog.close();
+    clearDialog();
     console.log("Closed");
 });
 

@@ -103,3 +103,79 @@ footer {
     justify-content: center;
     color: var(--main-color);
 }
+
+dialog:not([open]) {
+    display:none;
+}
+
+dialog {
+    width: 408px;
+    height: 271px;
+    display: grid;
+    grid-template-columns: repeat(12, calc(100px / 3));
+    grid-template-rows: repeat(8, calc(100px / 3));
+    align-items: center;
+    background-image: url("images/peter-herrmann-aT88kga0g_M-unsplash.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 0px;
+    color: var(--main-color);
+    border: solid 5px black;
+}
+
+#titlelabel {
+    grid-column: 2 / span 2;
+    grid-row: 2 / 3;
+}
+
+#title {
+    grid-column: 5 / span 7;
+    grid-row: 2 / 3;
+}
+
+#authorlabel {
+    grid-column: 2 / span 2;
+    grid-row: 3 / 4;
+}
+
+#author {
+    grid-column: 5 / span 7;
+    grid-row: 3 / 4;
+}
+
+#pageslabel {
+    grid-column: 2 / span 2;
+    grid-row: 4 / 5;
+}
+
+#pages {
+    grid-column: 5 / span 7;
+    grid-row: 4 / 5;
+}
+
+#havereadlabel {
+    grid-column: 2 / span 3;
+    grid-row: 5 / 6;
+}
+
+#haveRead {
+    grid-column: 5 / span 1;
+    grid-row: 5 / 6;
+    justify-self: baseline;
+}
+
+#cancel {
+    grid-area cancel;
+    grid-column: 3 / span 3;
+    grid-row: 7 / 8;
+    background-color: var(--main-color);
+    color: black;
+}
+
+#save {
+    grid-area: save;
+    grid-column: 8 / span 3;
+    grid-row: 7 / 8;
+    background-color: var(--main-color);
+    color: black;
+}
