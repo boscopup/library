@@ -58,7 +58,9 @@ function deleteBookFromLibrary(id) {
 }
 
 function refreshBookDisplay() {
-    let bookDiv, p, img;
+    let bookDiv, div, img, span;
+    const toggleOnURL = "images/toggle-switch.png";
+    const toggleOffURL = "images/toggle-switch-off.png";
     let display = document.querySelector("#bookDisplay");
     display.replaceChildren();  // Empty what's there
     myLibrary.forEach((book, index) => {
@@ -66,26 +68,51 @@ function refreshBookDisplay() {
         bookDiv = document.createElement("div")
         bookDiv.classList.add("book");
         bookDiv.id = bookID;
-        p = document.createElement("p");
-        p.classList.add("bookTitle");
-        p.textContent = book.title;
-        bookDiv.appendChild(p);
-        p = document.createElement("p");
-        p.classList.add("bookAuthor");
-        p.textContent = book.author;
-        bookDiv.appendChild(p);
-        p = document.createElement("p");
-        p.classList.add("bookPages");
-        p.textContent = book.pages + " pages";
-        bookDiv.appendChild(p);
-        p = document.createElement("p");
-        p.classList.add("bookReadStatus");
+        div = document.createElement("div");
+        div.classList.add("bookTitle");
+        div.textContent = book.title;
+        bookDiv.appendChild(div);
+        div = document.createElement("div");
+        div.classList.add("bookAuthor");
+        div.textContent = book.author;
+        bookDiv.appendChild(div);
+        div = document.createElement("div");
+        div.classList.add("bookPages");
+        div.textContent = book.pages + " pages";
+        bookDiv.appendChild(div);
+        div = document.createElement("div");
+        div.classList.add("bookReadStatus");
+        span = document.createElement("span");
+        span.id = `read-${index}`;
+        img = document.createElement("img");
+        img.classList.add("toggle");
+        img.id = `toggle-${index}`;
         if (book.haveRead) {
-            p.textContent = "Have read";
+            span.textContent = "Read";
+            img.src = toggleOnURL;
         } else {
-            p.textContent = "Have not read";
+            span.textContent = "Not Read";
+            img.src = toggleOffURL;
         }
-        bookDiv.appendChild(p);
+        img.addEventListener("click", () => {
+            image = document.getElementById(`toggle-${index}`);
+            if (image.src.endsWith(toggleOnURL)) {
+                myLibrary[index].haveRead = false;
+                image.src = toggleOffURL;
+                s = document.querySelector(`#read-${index}`);
+                s.textContent = "Not Read";
+            } else if (image.src.endsWith(toggleOffURL)) {
+                myLibrary[index].haveRead = true;
+                image.src = toggleOnURL;
+                s = document.querySelector(`#read-${index}`);
+                s.textContent = "Read";
+            } else {
+                console.log("No source found");
+            }
+        })
+        div.appendChild(span);
+        div.appendChild(img);
+        bookDiv.appendChild(div);
         img = document.createElement("img");
         img.src = "images/trash-can-outline.png";
         img.alt = "Delete book";

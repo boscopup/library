@@ -1,6 +1,6 @@
 :root {
     --book-width: 250px;
-    --book-height: 200px;
+    --book-height: 250px;
     --book-padding: 10px;
     --book-border: 3px;
     --book-display-grid-gap: 10px;
@@ -89,9 +89,28 @@ main {
     width: var(--book-width);
     height: var(--book-height);
     box-shadow: 2px 2px 2px 2px rgb(66, 66, 66);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .book > img {
+    width: 20px;
+    height: 20px;
+}
+
+.bookReadStatus {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.bookReadStatus > span {
+    width: 8ch;
+}
+
+.toggle {
     width: 20px;
     height: 20px;
 }
