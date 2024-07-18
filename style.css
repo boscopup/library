@@ -98,11 +98,15 @@ main {
     justify-content: flex-start;
 }
 
-.book > img {
+.action-images {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: auto;
+}
+.action-images > img {
     width: 20px;
     height: 20px;
-    align-self: flex-end;
-    margin-top: auto;
 }
 
 .bookTitle {

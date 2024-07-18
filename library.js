@@ -46,6 +46,19 @@ function addBookToLibrary() {
     myLibrary.push(book);
 }
 
+function editBookInLibrary(id) {
+    console.log(`Editing book #${id}`);
+    let title, author, pages, haveRead;
+    title = document.querySelector('#title').value;
+    author = document.querySelector('#author').value;
+    pages = document.querySelector('#pages').value;
+    haveRead = document.querySelector('#haveRead').checked;
+    myLibrary[id].title = title;
+    myLibrary[id].author = author;
+    myLibrary[id].pages = pages;
+    myLibrary[id].haveRead = haveRead;
+}
+
 /**
  * 
  * @param {string} bookID contains a string of the form "book-#", where # is an integer
@@ -113,6 +126,24 @@ function refreshBookDisplay() {
         div.appendChild(span);
         div.appendChild(img);
         bookDiv.appendChild(div);
+
+        div = document.createElement("div");
+        div.classList.add("action-images");
+        img = document.createElement("img");
+        img.src = "images/pencil.png";
+        img.alt = "Edit book";
+        img.title = "Edit book";
+        img.id = `edit-${index}`;
+        img.addEventListener("click", () => {
+            dialog.setAttribute("data-dialog-type", "edit");
+            dialog.setAttribute("data-dialog-book-id", index);
+            document.querySelector("#title").value = myLibrary[index].title;
+            document.querySelector("#author").value = myLibrary[index].author;
+            document.querySelector("#pages").value = myLibrary[index].pages;
+            document.querySelector("#haveRead").checked = myLibrary[index].haveRead;
+            dialog.showModal();
+        })
+        div.appendChild(img);
         img = document.createElement("img");
         img.src = "images/trash-can-outline.png";
         img.alt = "Delete book";
@@ -122,7 +153,8 @@ function refreshBookDisplay() {
             deleteBookFromLibrary(index);
             refreshBookDisplay();
         })
-        bookDiv.appendChild(img);
+        div.appendChild(img);
+        bookDiv.appendChild(div);
         display.appendChild(bookDiv);
     });
 }
@@ -131,11 +163,13 @@ function clearDialog() {
     document.querySelector('#title').value = "";
     document.querySelector('#author').value = "";
     document.querySelector('#pages').value = "";
-    document.querySelector('#haveRead').checked = false;    
+    document.querySelector('#haveRead').checked = false;  
+    dialog.setAttribute("data-dialog-bookid", "");  
 }
 
 
 const dialog = document.querySelector("dialog");
+dialog.setAttribute("data-dialog-type", "add");
 const saveButton = document.querySelector("dialog button#save");
 const cancelButton = document.querySelector("dialog button#cancel");
 
@@ -149,13 +183,18 @@ cancelButton.addEventListener("click", () => {
 
 saveButton.addEventListener("click", () => {
     dialog.close();
-    addBookToLibrary();
+    if (dialog.getAttribute("data-dialog-type") == "add") {
+        addBookToLibrary();
+    } else if (dialog.getAttribute("data-dialog-type") == "edit") {
+        editBookInLibrary(dialog.getAttribute("data-dialog-book-id"));
+    }
     refreshBookDisplay();
     clearDialog();
     console.log("Saved\n");
 } );
 
 addBookButton.addEventListener("click", () => {
+    dialog.setAttribute("data-dialog-type", "add");
     dialog.showModal();
 });
 
