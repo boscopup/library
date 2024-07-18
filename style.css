@@ -154,15 +154,15 @@ dialog:not([open]) {
 }
 
 dialog {
-    width: 408px;
-    height: 271px;
+    width: 400px;
+    height: 266px;
     display: grid;
     grid-template-columns: repeat(12, calc(100px / 3));
     grid-template-rows: repeat(8, calc(100px / 3));
     align-items: center;
-    background-image: url("images/peter-herrmann-aT88kga0g_M-unsplash.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+    background: url("images/peter-herrmann-aT88kga0g_M-unsplash.png") no-repeat center center fixed;
+    background-size: 400px 266px cover;
+    overflow: hidden;    /* Necessary to prevent scrollbars on modal */
     padding: 0px;
     color: var(--main-color);
     border: solid 5px black;
