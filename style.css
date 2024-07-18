@@ -210,7 +210,6 @@ dialog {
 }
 
 #cancel {
-    grid-area cancel;
     grid-column: 3 / span 3;
     grid-row: 7 / 8;
     background-color: var(--main-color);
@@ -218,7 +217,6 @@ dialog {
 }
 
 #save {
-    grid-area: save;
     grid-column: 8 / span 3;
     grid-row: 7 / 8;
     background-color: var(--main-color);
