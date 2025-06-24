@@ -1,74 +1,122 @@
-const myLibrary = [];
+const dialog = document.querySelector("dialog");
+dialog.setAttribute("data-dialog-type", "add");
+const saveButton = document.querySelector("dialog button#save");
+const cancelButton = document.querySelector("dialog button#cancel");
+const addBookButton = document.querySelector("#addBook");
 
-/**
- *  populateLibrary: For development purposes to have a canned set of books
- *  already in the library. When database functionality gets added, this
- *  function can pull from the database to initialize the page.
- */
-function populateLibrary() {
-    let book;
-    book = new Book("The Hobbit", "J.R.R. Tolkien", 300, true);
-    myLibrary.push(book);
-    book = new Book("Just Mercy", "Bryan Stevenson", 456, true);
-    myLibrary.push(book);
-    book = new Book("Pride and Prejudice", "Jane Austen", 345, false);
-    myLibrary.push(book);
-    book = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 159, true);
-    myLibrary.push(book);
-    book = new Book("Miss Peregrine's Home for Peculiar Children", "Ransom Riggs and Jesse Bernstein", 352, false);
-    myLibrary.push(book);
-}
-
-function Book(title, author, pages, haveRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.haveRead = haveRead;
-    this.isReadMessage = function () {
-        if (this.haveRead) {
-            return "Has been read";
-        } else {
-            return "Has not been read";
+class Book {
+    constructor(title, author, pages, haveRead) {
+        this._title = title;
+        this._author = author;
+        this._pages = pages;
+        this._haveRead = haveRead;
+        this.isReadMessage = function () {
+            if (this._haveRead) {
+                return "Has been read";
+            } else {
+                return "Has not been read";
+            }
         }
+        this.info = function () {
+            console.log(`${this._title} by ${this._author}, ${this._pages} pages, ${this._isReadMessage()}\n`);
+        };
     }
-    this.info = function () {
-        console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.isReadMessage()}\n`);
-    };
+    get title() {
+        return this._title;
+    }
+    set title(value) {
+        this._title = value;
+    }
+
+    get author() {
+        return this._author;
+    }
+    set author(value) {
+        this._author = value;
+    }
+
+    get pages() {
+        return this._pages;
+    }
+    set pages(value) {
+        this._pages = value;
+    }
+
+    get haveRead() {
+        return this._haveRead;
+    }
+    set haveRead(value) {
+        this._haveRead = value;
+    }
 }
 
-function addBookToLibrary() {
-    let title, author, pages, haveRead;
-    title = document.querySelector('#title').value;
-    author = document.querySelector('#author').value;
-    pages = document.querySelector('#pages').value;
-    haveRead = document.querySelector('#haveRead').checked;
-    book = new Book(title, author, pages, haveRead);
-    myLibrary.push(book);
+class Library {
+
+
+    myLibrary = [];
+
+    get myLibrary() {
+        return this.myLibrary;
+    }
+
+
+    /**
+     *  constructor: For development purposes to have a canned set of books
+     *  already in the library. When database functionality gets added, this
+     *  function can pull from the database to initialize the page.
+     */
+    constructor() {
+        let book;
+        book = new Book("The Hobbit", "J.R.R. Tolkien", 300, true);
+        this.myLibrary.push(book);
+        book = new Book("Just Mercy", "Bryan Stevenson", 456, true);
+        this.myLibrary.push(book);
+        book = new Book("Pride and Prejudice", "Jane Austen", 345, false);
+        this.myLibrary.push(book);
+        book = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 159, true);
+        this.myLibrary.push(book);
+        book = new Book("Miss Peregrine's Home for Peculiar Children", "Ransom Riggs and Jesse Bernstein", 352, false);
+        this.myLibrary.push(book);
+    }
+
+
+
+    addBookToLibrary() {
+        let title, author, pages, haveRead;
+        title = document.querySelector('#title').value;
+        author = document.querySelector('#author').value;
+        pages = document.querySelector('#pages').value;
+        haveRead = document.querySelector('#haveRead').checked;
+        book = new Book(title, author, pages, haveRead);
+        this.myLibrary.push(book);
+    }
+
+    editBookInLibrary(id) {
+        console.log(`Editing book #${id}`);
+        let title, author, pages, haveRead;
+        title = document.querySelector('#title').value;
+        author = document.querySelector('#author').value;
+        pages = document.querySelector('#pages').value;
+        haveRead = document.querySelector('#haveRead').checked;
+        this.myLibrary[id].title = title;
+        this.myLibrary[id].author = author;
+        this.myLibrary[id].pages = pages;
+        this.myLibrary[id].haveRead = haveRead;
+    }
+
+    /**
+     * 
+     * @param {string} bookID contains a string of the form "book-#", where # is an integer
+     * 
+     * This function searches the library for the book and removes it from the array.
+     */
+    deleteBookFromLibrary(id) {
+        console.log(`Removing book ID#${id}`);
+        this.myLibrary.splice(id, 1);
+    }
 }
 
-function editBookInLibrary(id) {
-    console.log(`Editing book #${id}`);
-    let title, author, pages, haveRead;
-    title = document.querySelector('#title').value;
-    author = document.querySelector('#author').value;
-    pages = document.querySelector('#pages').value;
-    haveRead = document.querySelector('#haveRead').checked;
-    myLibrary[id].title = title;
-    myLibrary[id].author = author;
-    myLibrary[id].pages = pages;
-    myLibrary[id].haveRead = haveRead;
-}
-
-/**
- * 
- * @param {string} bookID contains a string of the form "book-#", where # is an integer
- * 
- * This function searches the library for the book and removes it from the array.
- */
-function deleteBookFromLibrary(id) {
-    console.log(`Removing book ID#${id}`);
-    myLibrary.splice(id, 1);
-}
+const library = new Library();
 
 function refreshBookDisplay() {
     let bookDiv, div, img, span;
@@ -76,7 +124,7 @@ function refreshBookDisplay() {
     const toggleOffURL = "images/toggle-switch-off.png";
     let display = document.querySelector("#bookDisplay");
     display.replaceChildren();  // Empty what's there
-    myLibrary.forEach((book, index) => {
+    library.myLibrary.forEach((book, index) => {
         bookID = "book-" + index;
         bookDiv = document.createElement("div")
         bookDiv.classList.add("book");
@@ -110,12 +158,12 @@ function refreshBookDisplay() {
         img.addEventListener("click", () => {
             image = document.getElementById(`toggle-${index}`);
             if (image.src.endsWith(toggleOnURL)) {
-                myLibrary[index].haveRead = false;
+                library.myLibrary[index].haveRead = false;
                 image.src = toggleOffURL;
                 s = document.querySelector(`#read-${index}`);
                 s.textContent = "Not Read";
             } else if (image.src.endsWith(toggleOffURL)) {
-                myLibrary[index].haveRead = true;
+                library.myLibrary[index].haveRead = true;
                 image.src = toggleOnURL;
                 s = document.querySelector(`#read-${index}`);
                 s.textContent = "Read";
@@ -137,10 +185,10 @@ function refreshBookDisplay() {
         img.addEventListener("click", () => {
             dialog.setAttribute("data-dialog-type", "edit");
             dialog.setAttribute("data-dialog-book-id", index);
-            document.querySelector("#title").value = myLibrary[index].title;
-            document.querySelector("#author").value = myLibrary[index].author;
-            document.querySelector("#pages").value = myLibrary[index].pages;
-            document.querySelector("#haveRead").checked = myLibrary[index].haveRead;
+            document.querySelector("#title").value = library.myLibrary[index].title;
+            document.querySelector("#author").value = library.myLibrary[index].author;
+            document.querySelector("#pages").value = library.myLibrary[index].pages;
+            document.querySelector("#haveRead").checked = library.myLibrary[index].haveRead;
             dialog.showModal();
         })
         div.appendChild(img);
@@ -150,7 +198,7 @@ function refreshBookDisplay() {
         img.title = "Delete book";
         img.id = "delete-" + index;
         img.addEventListener("click", () => {
-            deleteBookFromLibrary(index);
+            library.deleteBookFromLibrary(index);
             refreshBookDisplay();
         })
         div.appendChild(img);
@@ -168,12 +216,7 @@ function clearDialog() {
 }
 
 
-const dialog = document.querySelector("dialog");
-dialog.setAttribute("data-dialog-type", "add");
-const saveButton = document.querySelector("dialog button#save");
-const cancelButton = document.querySelector("dialog button#cancel");
 
-const addBookButton = document.querySelector("#addBook");
 
 cancelButton.addEventListener("click", () => {
     dialog.close();
@@ -184,9 +227,9 @@ cancelButton.addEventListener("click", () => {
 saveButton.addEventListener("click", () => {
     dialog.close();
     if (dialog.getAttribute("data-dialog-type") == "add") {
-        addBookToLibrary();
+        library.addBookToLibrary();
     } else if (dialog.getAttribute("data-dialog-type") == "edit") {
-        editBookInLibrary(dialog.getAttribute("data-dialog-book-id"));
+        library.editBookInLibrary(dialog.getAttribute("data-dialog-book-id"));
     }
     refreshBookDisplay();
     clearDialog();
@@ -198,5 +241,6 @@ addBookButton.addEventListener("click", () => {
     dialog.showModal();
 });
 
-populateLibrary();
+
+
 refreshBookDisplay();
